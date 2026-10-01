@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -10,4 +11,5 @@ class Post extends Model
         'title',
         'description',
     ];
+    use HasFactory;
 }

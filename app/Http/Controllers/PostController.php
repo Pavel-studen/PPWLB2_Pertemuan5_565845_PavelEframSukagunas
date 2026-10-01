@@ -25,6 +25,7 @@ class PostController extends Controller
     public function create()
     {
         return view('posts.create');
+        //
     }
 
     /**
@@ -38,6 +39,7 @@ class PostController extends Controller
         ]);
         Post::create($request->only(['title', 'description']));
         return redirect()->route('posts.index');
+        //
     }
 
     /**

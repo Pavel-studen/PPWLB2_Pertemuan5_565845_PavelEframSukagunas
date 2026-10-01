@@ -5,3 +5,5 @@
 @show
 
 @endsection
+
+@include('partials.footer')

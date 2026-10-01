@@ -20,7 +20,7 @@
     </main>
 
     <footer>
-        @yield('footer', '©2026 Pavels Blog. All rights reserved.')
+        @yield('footer', '&copy ; 2026')
     </footer>
 
     @stack('scripts')
