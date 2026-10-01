@@ -24,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -32,7 +32,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:200',
+            'description' => 'required',
+        ]);
+        Post::create($request->only(['title', 'description']));
+        return redirect()->route('posts.index');
     }
 
     /**
