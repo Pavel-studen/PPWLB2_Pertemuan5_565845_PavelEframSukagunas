@@ -49,3 +49,20 @@ h1 {
     font-weight: normal;
     margin-bottom: 10px;
 }
+
+label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}

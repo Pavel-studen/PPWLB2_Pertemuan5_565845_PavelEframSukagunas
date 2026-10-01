@@ -33,13 +33,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
+        $post->save();
+        return redirect()->route('posts.index');
         $request->validate([
             'title' => 'required|max:200',
             'description' => 'required',
         ]);
-        Post::create($request->only(['title', 'description']));
-        return redirect()->route('posts.index');
-        //
+        Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+        return redirect()->route('posts.index')->with('success', 'New Data successfully added');
     }
 
     /**
@@ -59,7 +66,9 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $data = [ 'post' => $post, ];
+        return view('posts.edit', $data);
     }
 
     /**
@@ -67,7 +76,15 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+        
+        $post = Post::findOrFail($id);
+        $post->update($validatedData);
+        
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
 
     /**
@@ -75,6 +92,8 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return redirect()->route('posts.index')->with('success', 'Data successfully deleted.');
     }
 }
