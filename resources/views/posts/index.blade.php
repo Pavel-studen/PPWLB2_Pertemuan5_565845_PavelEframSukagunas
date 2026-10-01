@@ -4,6 +4,10 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
         <h1>Blog Posts</h1>
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success')}}</div>
+        @endif
+
         @if(count($posts)>0)
             @foreach ($posts as $post)
             <div class="well">
@@ -14,8 +18,10 @@
             </div>
             @endforeach
         @else
-            <h3>Tidak ada data</h3>
+            <h3>No data.</h3>
         @endif
+        <a href="{{ route('posts.create') }}">Create New Post</a>
         </div>
     </div>
+
 @endsection

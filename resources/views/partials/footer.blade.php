@@ -4,6 +4,4 @@
 
 @show
 
-@endsection
-
-@include('partials.footer')
+@endsections
