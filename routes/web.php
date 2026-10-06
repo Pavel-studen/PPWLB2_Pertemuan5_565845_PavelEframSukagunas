@@ -32,6 +32,19 @@ Route::get('/profile', function() {
     ]);
 });
 
+// Route::get('/profile', function() {
+//     return view('profile')
+//         ->with('name', 'Pavel')
+//         ->with('age', 20);
+// });
+
+// Route::get('/profile', function() {
+//     $name = 'Pavel';
+//     $age = 20;
+//     $place = 'Yogyakarta';
+// return view('profile', compact('name', 'age', 'place'));
+// });
+
 Route::get('/', fn() => view('home'))->name('home');
 Route::get('/about', fn() => view('about'))->name('about');
 Route::get('/education', fn() => view('education'))->name('education');

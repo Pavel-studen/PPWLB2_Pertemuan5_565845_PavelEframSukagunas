@@ -17,6 +17,18 @@ class PostController extends Controller
             'posts' => Post::all()
         );
         return view('posts.index')->with($data);
+
+        $totalPosts = Post::count();
+        $latestPost = Post::latest()->first();
+        $maxId = Post::max('id');
+        return view('posts', compact('totalPosts', 'latestPost', 'maxId'));
+
+        $query = Post::query();
+        if ($request->filled('search')) {
+            $query->search($request->search);
+        }
+        $posts = $query->latest()->paginate(10);
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -33,19 +45,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $post = new Post();
-        $post->title = $request->input('title');
-        $post->description = $request->input('description');
-        $post->save();
-        return redirect()->route('posts.index');
-        $request->validate([
-            'title' => 'required|max:200',
-            'description' => 'required',
+        // $post = new Post();
+        // $post->title = $request->input('title');
+        // $post->description = $request->input('description');
+        // $post->save();
+        // return redirect()->route('posts.index');
+
+        // $request->validate([
+        //     'title' => 'required|max:200',
+        //     'description' => 'required',
+        // );
+
+        // Post::create([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        // ]);
+
+        $validatedData = $request->validate([
+            'title'       => 'required|string|max:200',
+            'description' => 'required|string',
         ]);
-        Post::create([
-            'title' => $request->title,
-            'description' => $request->description,
-        ]);
+        Post::create($validatedData);
         return redirect()->route('posts.index')->with('success', 'New Data successfully added');
     }
 
@@ -59,6 +79,13 @@ class PostController extends Controller
             'posts' => Post::find($id)
         );
         return view('posts.show')->with($data);
+
+        $post = Post::find($id);
+        if (!$post) {
+            abort(404);
+        }
+        $post = Post::findOrFail($id);
+        return view('posts.show', compact('post'));
     }
 
     /**
