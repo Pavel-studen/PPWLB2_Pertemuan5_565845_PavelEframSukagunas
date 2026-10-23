@@ -2,6 +2,4 @@
 
 @include('partials.footer')
 
-@show
-
-@endsections
+@endsection

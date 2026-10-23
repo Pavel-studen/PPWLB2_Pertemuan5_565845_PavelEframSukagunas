@@ -10,24 +10,26 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = array(
-            'id' => "posts",
-            'posts' => Post::all()
-        );
-        return view('posts.index')->with($data);
+        //$data = array(
+        //    'id' => "posts",
+        //    'posts' => Post::all()
+        //);
+        //return view('posts.index')->with($data);
 
-        $totalPosts = Post::count();
-        $latestPost = Post::latest()->first();
-        $maxId = Post::max('id');
-        return view('posts', compact('totalPosts', 'latestPost', 'maxId'));
+        //$totalPosts = Post::count();
+        //$latestPost = Post::latest()->first();
+        //$maxId = Post::max('id');
+        //return view('posts', compact('totalPosts', 'latestPost', 'maxId'));
 
-        $query = Post::query();
-        if ($request->filled('search')) {
-            $query->search($request->search);
-        }
-        $posts = $query->latest()->paginate(10);
+        // $query = Post::query();
+        // if ($request->filled('search')) {  
+        //     $query->search($request->search);
+        // }
+        // $posts = $query->paginate(10)->withQueryString();
+        $perPage = $request->input('perPage', 10);
+        $posts = Post::paginate($perPage)->withQueryString();
         return view('posts.index', compact('posts'));
     }
 
